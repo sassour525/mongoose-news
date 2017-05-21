@@ -1,0 +1,26 @@
+body, html {
+    background: url('../lightpaperfibers.png');
+}
+
+.jumbotron {
+    text-align: center;
+    /*background: url('../NEWSPAPER.jpg');*/
+    opacity: 20;
+    padding: 100px;
+}
+
+
+.navbar, .panel-default>.panel-heading {
+    background-image: linear-gradient(to bottom,#337ab7 0,#265a88 100%);
+    border: 0
+        
+}
+
+.navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.open>a,  {
+    color: black;
+}
+
+.navbar-default .navbar-nav>li>a, .panel-title, .navbar-default .navbar-nav>li>a:hover {
+    color: #fff;
+}
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/saved">Saved Articles</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Mongo Scraper!</h1>
+            <p>News Edition</p>
+            <p><a class="btn btn-success btn-lg" id="scrape-news-button" role="button">Scrape News Articles</a></p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">New Articles</h3>
+                </div>
+                <div class="panel-body">
+                    {{#each articles}}
+                        {{#unless this.saved}}
+                            <div class="article-div">
+                                <h2 id="article-headline">{{this.title}}</h2>
+                                <a id="article-link" href="{{this.link}}">{{this.link}}</a>
+                                <button class="btn btn-primary" id="save-article-button" data-value="{{this._id}}" type="submit">Save Article</button>
+                            </div>
+                        {{/unless}}
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

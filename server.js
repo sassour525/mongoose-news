@@ -45,9 +45,73 @@ db.once("open", function() {
 
 // Routes
 
+// Load initial page and render scraped articles
+app.get('/', function(req, res) {
+    Article.find({}, function(err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("index", { articles: result });
+        }
+    });
+});
 
+// Scrape articles and save them to the DB
+app.get('/scrape', function(req, res) {
+    request("http://www.echojs.com/", function(error, response, html) {
+        var $ = cheerio.load(html);
 
+        $("article h2").each(function(i, element) {
 
+            // Save an empty result object
+            var result = {};
+
+            // Add the text and href of every link, and save them as properties of the result object
+            result.title = $(this).children("a").text();
+            result.link = $(this).children("a").attr("href");
+
+            var entry = new Article(result);
+
+            // Now, save that entry to the db
+            entry.save(function(err, doc) {
+                // Log any errors
+                if (err) {
+                    console.log(err);
+                }
+                // Or log the doc
+                else {
+                    console.log(doc);
+                }
+            });
+
+        });
+    });
+    // Tell the browser that we finished scraping the text
+    console.log("Scrape Complete");
+});
+
+// Set saved value in the DB when user clicks save article button
+app.post('/saveArticle', function(req, res) {
+    console.log(req.body);
+    Article.update({'_id': req.body.articleId}, {$set: {'saved': true}}, function(err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(result);
+        }
+    });
+});
+
+// Render saved page
+app.get('/saved', function(req, res) {
+    Article.find({}, function(err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render("saved", { articles: result });
+        }
+    });
+});
 
 
 // Listen on port 3000
