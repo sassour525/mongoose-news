@@ -31,7 +31,7 @@
                             <div class="article-div">
                                 <h2 id="article-headline">{{this.title}}</h2>
                                 <a id="article-link" href="{{this.link}}">{{this.link}}</a>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-value="{{this._id}}" data-target=".bs-example-modal-lg">Add Note</button>
+                                <button type="button" class="btn btn-primary add-note-button" data-toggle="modal" data-value="{{this._id}}" data-target=".notes-modal">Add Note</button>
                                 {{!--<button id="add-note-button" data-value="{{this._id}}"type="submit">Add a Note</button>--}}
                             </div>
                         {{/if}}
@@ -41,7 +41,7 @@
         </div>
     </div>
     <!-- Large modal -->
-    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal fade notes-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header"> 
@@ -60,9 +60,9 @@
                         {{/each}}
                     </div>
                 </div>
-            <textarea class="form-control" rows="3"></textarea>
+            <textarea class="form-control" id="note-body" rows="3"></textarea>
             <div class="modal-footer">
-                <button class="btn btn-success" type="submit">Save Note</button>
+                <button class="btn btn-success" id="save-note-button" type="submit">Save Note</button>
             </div>
             </div> 
         </div>

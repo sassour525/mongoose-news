@@ -113,6 +113,34 @@ app.get('/saved', function(req, res) {
     });
 });
 
+app.get('/articles/:id', function(req, res) {
+    Article.findOne({'_id': req.params.id}).populate("notes").exec(function(err, doc) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(doc);
+        }
+    });
+});
+
+app.post('/articles/:id', function(req, res) {
+    var articleId = req.params.id;
+    var newNote = new Note(req.body);
+
+    newNote.save(function(err, doc) {
+        if (err) {
+            console.log(err);
+        } else {
+            Article.findOneAndUpdate({'_id': articleId}, { $push: {'notes': doc._id}}, {new: true}, function(err, newdoc) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.send(newdoc);
+                }
+            });
+        }
+    });
+});
 
 // Listen on port 3000
 app.listen(3000, function() {

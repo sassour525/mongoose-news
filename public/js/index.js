@@ -7,7 +7,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#save-article-button').on('click', function() {
+    $('.save-article-button').on('click', function() {
         var thisId = $(this).attr("data-value");
         $.ajax({
             method: 'POST',
