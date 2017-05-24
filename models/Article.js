@@ -16,10 +16,10 @@ var ArticleSchema = new Schema({
         type: Boolean,
         default: false
     },
-    notes: {
+    notes: [{
         type: Schema.Types.ObjectId,
         ref: "Note"
-    }
+    }]
 });
 
 var Article = mongoose.model('Article', ArticleSchema);

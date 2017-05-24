@@ -47,7 +47,7 @@ db.once("open", function() {
 
 // Load initial page and render scraped articles
 app.get('/', function(req, res) {
-    Article.find({}, function(err, result) {
+    Article.find({saved: false}, function(err, result) {
         if (err) {
             console.log(err);
         } else {
@@ -60,9 +60,8 @@ app.get('/', function(req, res) {
 app.get('/scrape', function(req, res) {
     request("http://www.echojs.com/", function(error, response, html) {
         var $ = cheerio.load(html);
-
+        var promise = null;
         $("article h2").each(function(i, element) {
-
             // Save an empty result object
             var result = {};
 
@@ -71,23 +70,24 @@ app.get('/scrape', function(req, res) {
             result.link = $(this).children("a").attr("href");
 
             var entry = new Article(result);
-
             // Now, save that entry to the db
-            entry.save(function(err, doc) {
+            promise = entry.save(function(err, doc) {
                 // Log any errors
                 if (err) {
                     console.log(err);
                 }
-                // Or log the doc
-                else {
-                    console.log(doc);
-                }
             });
-
         });
+        //promise used to wait for scrape to complete
+        if (promise instanceof Promise) {
+            promise.then(function(result) {
+                res.send("Scrape Complete");
+            });
+        } else {
+            res.status(400);
+            res.send('Error');
+        }
     });
-    // Tell the browser that we finished scraping the text
-    console.log("Scrape Complete");
 });
 
 // Set saved value in the DB when user clicks save article button
@@ -97,7 +97,7 @@ app.post('/saveArticle', function(req, res) {
         if (err) {
             console.log(err);
         } else {
-            console.log(result);
+            res.send(result);
         }
     });
 });
@@ -113,8 +113,9 @@ app.get('/saved', function(req, res) {
     });
 });
 
+//retrieve articles for presenting notes
 app.get('/articles/:id', function(req, res) {
-    Article.findOne({'_id': req.params.id}).populate("notes").exec(function(err, doc) {
+    Article.findOne({'_id': req.params.id}).populate('notes').exec(function(err, doc) {
         if (err) {
             console.log(err);
         } else {
@@ -123,21 +124,31 @@ app.get('/articles/:id', function(req, res) {
     });
 });
 
+//update article notes
 app.post('/articles/:id', function(req, res) {
-    var articleId = req.params.id;
     var newNote = new Note(req.body);
 
     newNote.save(function(err, doc) {
         if (err) {
             console.log(err);
         } else {
-            Article.findOneAndUpdate({'_id': articleId}, { $push: {'notes': doc._id}}, {new: true}, function(err, newdoc) {
+            Article.findOneAndUpdate({ '_id': req.params.id }, { $push: { 'notes': doc._id } }, { new: true }).exec(function(err, newdoc) {
                 if (err) {
                     console.log(err);
                 } else {
                     res.send(newdoc);
                 }
             });
+        }
+    });
+});
+
+app.delete('/deleteNote/:id', function(req, res) {
+    Note.remove({'_id': req.params.id}, function(err, doc) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(doc);
         }
     });
 });

@@ -21,48 +21,46 @@
 
     <div class="container">
         <div class="row">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Saved Articles</h3>
-                </div>
-                <div class="panel-body">
-                    {{#each articles}}
-                        {{#if this.saved}}
-                            <div class="article-div">
-                                <h2 id="article-headline">{{this.title}}</h2>
-                                <a id="article-link" href="{{this.link}}">{{this.link}}</a>
-                                <button type="button" class="btn btn-primary add-note-button" data-toggle="modal" data-value="{{this._id}}" data-target=".notes-modal">Add Note</button>
-                                {{!--<button id="add-note-button" data-value="{{this._id}}"type="submit">Add a Note</button>--}}
-                            </div>
-                        {{/if}}
-                    {{/each}}
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title article-panel-title">Saved Articles</h3>
+                    </div>
+                    <div class="panel-body">
+                        {{#each articles}}
+                            {{#if this.saved}}
+                                <div class="article-div">
+                                    <h2 id="article-headline">{{this.title}}</h2>
+                                    <a id="article-link" href="{{this.link}}">{{this.link}}</a>
+                                    <button type="button" class="btn btn-primary add-note-button" data-toggle="modal" data-value="{{this._id}}" data-target=".notes-modal">Add Note</button>
+                                </div>
+                            {{/if}}
+                        {{/each}}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Large modal -->
     <div class="modal fade notes-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header"> 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> 
-                <h4 class="modal-title">Notes for Article: </h4> 
+                <h4 class="modal-title"></h4> 
             </div> 
             <div class="modal-body"> 
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        {{#each notes}}
-                            <div class="article-div">
-                                <h2 id="note-body">{{this.body}}</h2>
-                                <button type="button" class="btn btn-danger">X</button>
-                                {{!--<button id="add-note-button" data-value="{{this._id}}"type="submit">Add a Note</button>--}}
-                            </div>
-                        {{/each}}
+                        <div class="note-div">
+
+                        </div>
                     </div>
                 </div>
-            <textarea class="form-control" id="note-body" rows="3"></textarea>
+            <textarea class="form-control" id="note-textarea" rows="3"></textarea>
             <div class="modal-footer">
-                <button class="btn btn-success" id="save-note-button" type="submit">Save Note</button>
+                <button class="btn btn-success" id="save-note-button" data-dismiss="modal">Save Note</button>
             </div>
             </div> 
         </div>
