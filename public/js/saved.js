@@ -34,7 +34,6 @@ $(document).ready(function() {
 
     //click event to save a note to the article
     $('#save-note-button').on('click', function() {
-        console.log(thisId);
         $.ajax({
             method: 'POST',
             url: '/articles/' + thisId,
@@ -42,7 +41,6 @@ $(document).ready(function() {
                 body: $('#note-textarea').val()
             }
         }).done(function(data) {
-            console.log(data);
             $('#note-textarea').val('');
         });
     });

@@ -16,7 +16,6 @@ $(document).ready(function() {
                 articleId: thisId
             }
         }).done(function(data){
-            console.log(data);
             location.reload();
         });
     });
