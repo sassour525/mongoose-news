@@ -33,7 +33,7 @@ app.set("view engine", "handlebars");
 var databaseUri = 'mongodb://localhost/mongooseNews';
 
 if (process.env.MONGODB_URI) {
-    mongoose.connect("mongodb://heroku_jqxz2z07:51a2i020qinenhcpk2hem1hicu@ds149481.mlab.com:49481/heroku_jqxz2z07");
+    mongoose.connect('mongodb://heroku_jqxz2z07:51a2i020qinenhcpk2hem1hicu@ds149481.mlab.com:49481/heroku_jqxz2z07');
 } else {
     mongoose.connect(databaseUri);
 }
