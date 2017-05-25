@@ -32,3 +32,31 @@ body, html {
     color: #fff;
 }
 
+.article-div {
+    background-image: linear-gradient(to bottom,#dbdbdb 0,#e2e2e2 100%);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 25px;
+    border: 2px solid #337ab7;
+}
+
+.save-article-button, .remove-article-button {
+    margin-top: -37px;
+}
+
+.add-note-button {
+    margin-top: -55px;
+}
+
+.remove-article-button {
+    margin-top: -20px;
+}
+
+.delete-note-button {
+    margin-top: -34px;
+}
+
+.note-div {
+    text-align: center;
+}
+    

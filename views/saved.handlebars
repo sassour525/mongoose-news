@@ -30,10 +30,10 @@
                         {{#each articles}}
                             {{#if this.saved}}
                                 <div class="article-div">
-                                    <h2 id="article-headline">{{this.title}}</h2>
+                                    <h3 id="article-headline">{{this.title}}</h3>
                                     <a id="article-link" href="{{this.link}}">{{this.link}}</a>
-                                    <button type="button" class="btn btn-primary add-note-button" data-toggle="modal" data-value="{{this._id}}" data-target=".notes-modal">Add Note</button>
-                                    <button type="button" class="btn btn-danger remove-article-button" data-value="{{this._id}}" type="submit">Remove from Saved</button>
+                                    <button type="button" class="btn btn-primary add-note-button pull-right" data-toggle="modal" data-value="{{this._id}}" data-target=".notes-modal">Add Note</button>
+                                    <button type="button" class="btn btn-danger remove-article-button pull-right" data-value="{{this._id}}" type="submit">Remove from Saved</button>
                                 </div>
                             {{/if}}
                         {{/each}}
