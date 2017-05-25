@@ -25,10 +25,22 @@ $(document).ready(function() {
                 $.ajax({
                     method: 'DELETE',
                     url: '/deleteNote/' + buttonId
-                }).done(function(data) {
-
-                });
+                }).done(function(data) {});
             });
+        });
+    });
+
+    //click event to remove an article from the saved list
+    $('.remove-article-button').on('click', function() {
+        var removeId = $(this).attr("data-value");
+        $.ajax({
+            method: 'POST',
+            url: '/removeSavedArticle',
+            data: {
+                articleId: removeId
+            }
+        }).done(function(data){
+            location.reload();
         });
     });
 

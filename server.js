@@ -97,10 +97,20 @@ app.get('/scrape', function(req, res) {
     });
 });
 
-// Set saved value in the DB when user clicks save article button
+// Set saved value to true in the DB when user clicks save article button
 app.post('/saveArticle', function(req, res) {
-    console.log(req.body);
     Article.update({'_id': req.body.articleId}, {$set: {'saved': true}}, function(err, result) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(result);
+        }
+    });
+});
+
+// Set saved value false in the DB when user clicks remove saved article button
+app.post('/removeSavedArticle', function(req, res) {
+    Article.update({'_id': req.body.articleId}, {$set: {'saved': false}}, function(err, result) {
         if (err) {
             console.log(err);
         } else {
